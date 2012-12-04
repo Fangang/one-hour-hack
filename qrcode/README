@@ -1,0 +1,23 @@
+One Hour Hack
+任务：
+		生成字符串的QR二维码图片
+过程：
+		下载代码http://fukuchi.org/works/qrencode/
+		编译并安装：./configure make make make install 。 其中缺少libpng库，下载，并安装：./configure make check make install 。
+		开始Hack！
+		开始只是测试性代码，包含头文件qrencode.h.开始gcc -w -qrencode.c -o qrencode，出现错误，找不到函数unreferenced，查看/usr/local/lib /usr/local/include 没有问题，使用-lqrencode 参数，依旧有一个函数unreferenced，网上查找一通，无解。最后，仔细看代码，原来是函数名字写错了，编译器错误提示不好。改正，通过。
+		期间还使用了export LD_LIBRARY_PATH = /usr/local/lib
+		开始Hack图片，需要SDL，没有，网上下载源代码，编译安装。包含头文件的时候，应该使用SDL/SDL.h，没有注意到SDL文件夹，其实带文件夹是个好习惯，每一个开源的库都应盖着么做，然后文件夹下面加上log文件。:]
+		看到libqrcode下面有一个test example文件夹，参考，作为图片显示的Hack参考。
+		加上图片SDL函数，运行的时候产生段错误，无奈。。。
+		调试，gcc -w -g 。。。，开始gdb ./ ...，r 但是定位到其他文件中去了，而自己对SDL又熟悉，只能放到下一个Hack Time。
+		段错误很好的参考：http://www.360doc.com/content/07/0924/11/2459_766487.shtml
+		段错误(核心已转储)：会产生一个core文件，一般默认core文件为0，解开限制ulimit -c 1000.
+			===========
+			核心已转储 （core dump) -- 内存清除，早期的内存用磁芯存储器 
+			通常是指针、内存等错误；
+			错误会存储到coredump文件，用gdb等工具可对coredump文件分析，定位错误发生的位置； 
+			gdb 运行程序名 core
+			进入gdb然后使用bt命令
+			可以查看进程意外退出前函数调用的堆栈，内容为从上到下列出对应从里层到外层的函数调用历史。
+			============
