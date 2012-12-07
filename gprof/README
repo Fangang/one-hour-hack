@@ -16,3 +16,6 @@ GUN binutils使用
 ar objcopy objdump readelf
 http://baike.baidu.com/view/1163670.htm
 
+
+git unstage的方法：
+	git reset HEAD + 文件名
