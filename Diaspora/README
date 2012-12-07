@@ -1,0 +1,17 @@
+Diaspora Hack
+Diaspora is distrubuted social network.
+依照Diaspora的说明，进行初始Hack。
+Wiki：https://github.com/diaspora/diaspora/wiki
+cat /etc/issue
+维基百科
+安装失败，尼玛。。。
+google一般都能解决。
+安装mysql错误：samba报错：http://kinggoo.com/sys-ubuntu-errorsamba4-pass.htm
+各种错误，防不胜防！
+https://groups.google.com/forum/#!msg/canvas-lms-users/38WTf5gpfWU/Zfh5u41sUAgJ
+bundle错误的话就单独安装喽！
+sudo apt-get install libcurl3 libcurl3-dev
+sudo gem install typhoeus 
+
+切换到手动安装，还是没有配置好mysql。。。。太繁琐了。。。。为什么会这样。。。
+以后再搞！！
