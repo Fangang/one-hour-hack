@@ -1,0 +1,113 @@
+													GNU Binutils
+GNU Binutils 是一系列二进制工具的合集，包括
+ld，
+as，
+addr2line,
+ar,
+c++filt,
+dlltool,
+gold,
+gprof,
+nlmconv,
+nm,
+objcopy,
+objdump,
+ranlib,
+readelf,
+size,
+strings,
+strip,
+windmc,
+windres
+大部分工具的开发都是用了BFD，即二进制文件描述库进行低级的操作，也会使用opcodes lib进行机器指令的汇编和反汇编。
+这次开始hack ld和as工具吧！
+
+一、首先是as工具：gcc的后端支持！
+as工具有强大的命令行支持：
+1. 支持多种平台，x86，ARM,i386等。
+			x86:是一系列基于Intel 8086 cpu指令集架构的计算机微处理器。8080（8-bit）->8086(16-bit)->80386(32bit)->x86-64  core i3 为64位。
+2. 不同平台有相应的命令行参数
+
+IA-32：Hello world 程序
+.globl  _start
+ 
+.section .text
+_start:
+        movl    $len, %edx
+        movl    $msg, %ecx
+        movl    $1, %ebx
+        movl    $4, %eax
+        int     $0x80
+ 
+        movl    $0, %ebx
+        movl    $1, %eax
+        int     $0x80
+.section .data
+msg:
+        .ascii  "Hello, world!\n"
+        len =   . - msg
+
+3 AS汇编器命令行选项
+-a：开启程序列表。 -f：快速操作。 -o：指定输出的目标文件名。 -R：组合数据区和代码区。 -W：取消警告信息。
+
+4. as生成的是目标文件，待链接
+GAS：
+as –o program.o program.s
+
+5. 使用gcc -w hello.s -o hello出现错误：(.text+0x18): undefined reference to `main'
+参考：
+没有main函数，，
+我们常用gcc main.c -o main命令编译一个程序，
+其实也可以分三步做，第一步生成汇编代码，第二步生成目标文件，第三步生成可执行文件：
+$ gcc -S main.c    
+（注意S是大写的）
+$ gcc -c main.s
+$ gcc main.o
+
+在main.c中这么写到：
+#include<stdio.h>
+int m(){
+  printf("this is a test!");
+  return 0;
+}
+很明显，这个程序不能运行，因为没有main函数，试一下：gcc main.c -o main
+报错：
+[ming@localhost codetest]$ gcc main.c -o main
+/usr/lib/gcc/i686-redhat-linux/4.5.1/../../../crt1.o: In function `_start':
+(.text+0x18): undefined reference to `main'
+collect2: ld 返回 1
+
+整个程序的入口点是crt1.o中提供的_start，它首先做一些初始化工作（以下称为启动例程，Startup Routine），然后调用C代码中提供的main函数。所以，以前我们说main函数是程序的入口点其实不准确，_start才是真正的入口点，而main函数是被_start调用的。在_start中指名了要掉main，而程序中只有m函数，所以就运行不起来。
+C程序的链接过程：
+linux下gcc <wbr>In <wbr>function <wbr>`_start'
+可以看到，，在生成main的可执行程序的时候，，其实还加入了其他的一些东西一起链接在一起执行的
+
+由于main函数是被启动例程调用的，所以从main函数return时仍返回到启动例程中，main函数的返回值被启动例程得到，如果将启动例程表示成等价的C代码（实际上启动例程一般是直接用汇编写的），则它调用main函数的形式是：
+
+exit(main(argc, argv));
+
+也就是说，启动例程得到main函数的返回值后，会立刻用它做参数调用exit函数。exit也是libc中的函数，它首先做一些清理工作，然后调用上一章讲过的_exit系统调用终止进程，main函数的返回值最终被传给_exit系统调用，成为进程的退出状态。我们也可以在main函数中直接调用exit函数终止进程而不返回到启动例程，例如：
+
+#include <stdlib.h>
+
+int main(void)
+{
+        exit(4);
+}
+
+这样和int main(void) { return 4; }的效果是一样的。在Shell中运行这个程序并查看它的退出状态：
+
+$ ./a.out 
+$ echo $?
+4
+
+按照惯例，退出状态为0表示程序执行成功，退出状态非0表示出错。注意，退出状态只有8位，而且被Shell解释成无符号数，如果将上面的代码改为exit(-1);或return -1;，则运行结果为
+
+$ ./a.out 
+$ echo $?
+255
+
+结果：将_start改为main搞定！这让我想起了DSP和ARM嵌入式软件开发的时候，自己要自己写启动代码，然后调入main函数。
+
+汇编与反汇编：http://www.lingcc.com/2010/01/09/10623/
+
