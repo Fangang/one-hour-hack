@@ -1,0 +1,18 @@
+对hello.s使用ld工具，会有警告：
+ld: warning: cannot find entry symbol _start; defaulting to 0000000008048074
+
+as hello.s -o hello.o
+ld -static -o hello hello.o -lc
+
+改为：crt一起链接：
+ld -static -o hello -L`gcc -print-file-name=` /usr/lib/i386-linux-gnu/crt1.o /usr/lib/i386-linux-gnu/crti.o hello.o /usr/lib/i386-linux-gnu/crtn.o -lc -lgcc 
+太复杂了，后改为：
+ ld -o hello /usr/lib/i386-linux-gnu/crt1.o /usr/lib/i386-linux-gnu/crti.o /usr/lib/i386-linux-gnu/crtn.o hello.o -lc
+出现：
+-bash: ./hello: 没有那个文件或目录，网上也找不到资料，尼玛！
+后来，把-o去掉就好了，原来是不许要-o的，对于ld来说！！
+
+
+一片很好的参考文章：不过他妈的就是它误导的！！
+http://www.lisha.ufsc.br/teaching/os/exercise/hello.html
+
