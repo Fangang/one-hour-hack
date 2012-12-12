@@ -1,0 +1,27 @@
+webhttrack的使用方法
+sudo apt-get install webhttrack
+sudo apt-get install httrack
+其中webhttrack是基于浏览器的GUI工具，而httrack是命令行工具。
+
+httrack创建一个镜像的时候，镜像文件夹下面会创建一个名为hts-cache的文件夹。用来update镜像。
+
+为了阻止网张流量被恶意滥用的方法：
+http://www.httrack.com/html/abuse.html#ABUSE2
+
+javascrpt比较cool：
+	比如：
+	You can replace:
+    <a href="bigfile.zip">Foo</a>
+by:
+    <script language="javascript">
+    <!--
+    document.write('<a h' + 're' + 'f="');
+    document.write('bigfile' + '.' + 'zip">');
+    // -->
+    </script>
+    Foo
+    </a>
+
+
+很好的参考：
+http://wenku.baidu.com/view/b128946327d3240c8447ef61.html
