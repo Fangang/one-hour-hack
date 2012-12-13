@@ -1,0 +1,14 @@
+theHarvester 一款用于在公共的源(公开的数据库)中（像google和Linkedin）email地址subdomain的智能工具。
+theHarvester.py
+
+命令行执行：python ./theHarvester.py
+
+python ./theHarcester -d 163.com -l 20 gogle
+
+
+From just an email address we have built a profile.
+
+需要挂VPN，否则被墙。
+
+很好的参考：
+http://www.social-engineer.org/framework/Computer_Based_Social_Engineering_Tools:_The_Harvester
