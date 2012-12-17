@@ -1,0 +1,24 @@
+whois命令
+
+		whois是一个查询响应协议，查询相应域名的服务器以及对应的IP地址，还有DNS服务器，以及公司信息等等。也会给出响应的whois数据库服务器以及其域名等。现在当然是分布式啦！
+
+运行原理
+		whois通常使用TCP协议43端口。每个域名/IP的whois信息由对应的管理机构保存。 
+		WHOIS服务是一个在线的“请求/响应”式服务。WHOIS Server运行在后台监听43端口，当Internet用户搜索一个域名（或主机、联系人等其他信息）时，WHOIS Server首先建立一个与Client的TCP连接，然后接收用户请求的信息并据此查询后台域名数据库。如果数据库中存在相应的记录，它会将相关信息如所有者、管理信息以及技术联络信息等，反馈给Client。待Server输出结束，Client关闭连接，至此，一个查询过程结束。
+		在绝大多数UNIX和类UNIX系统中键入man 1 whois，都会得到whois客户端程序的使用帮助。同样，用户只要telnet到运行WHOIS Server的43端口，敲入所需查询的信息，也能得到相应的信息反馈。
+
+		随着Internet的急速膨胀，人们意识到集中式的WHOIS Server越来越不能够满足网络用户的需求，于是分布式就成了WHOIS Server的主要发展方向。“Referral WHOIS”（简称为RWhois）就是这个方向上的研究成果，其主要思路是利用分布式的数据库来维护众多的域名、主机等信息，用referral来指示client经由网络上的多个的Server最后连到所查询信息的权威WHOIS Server。另一方面，IETF成立了Whois and Network Information Lookup Service Working Group（WNILS）来研究将本地WHOIS服务进行扩展和标准化，并称之为WHOIS++ 
+
+
+
+
+好的参考资料：
+http://en.wikipedia.org/wiki/Whois
+
+NETCRAFT：
+http://news.netcraft.com/
+
+host:
+host baidu.com
+
+

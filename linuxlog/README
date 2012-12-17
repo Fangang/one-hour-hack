@@ -1,0 +1,13 @@
+/etc/rsyslog.conf:log rules.include log file location. record format.and so on
+
+/var/log/:
+		dmesg:包含kernel ring buffer信息。新信息会覆盖旧的信息。系统启动时包含内核检测到的硬件信息。当你使用编写一个内核模块并使用了printk的时候，打印信息也会出现在dmesg里面。
+		auth.log:包含系统认证信息，比如用户登录、切换信息等
+		boot.log:包含系统启动信息,磁盘，守护进程等
+		dpkg.log:包含软件包安装和卸载信息
+		kern.log:包含内核记录的信息，在定制内核的时候有用。
+		lastlog:最近的登录信息。enca filename查看文件编码。使用lastlog，命令查看
+		Xorg.x.log:X-window信息
+		btmp:包含错误登录的尝试。使用last命令查看。
+		apt/history.log:记录每一个apt-get命令安装或者卸载软件的命令。
+		
