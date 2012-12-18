@@ -1,0 +1,12 @@
+1. nslookup
+		server 8.8.4.4
+		set type=any
+		[domain name]
+2. dig @target_ip
+
+3. metagoogl.py:
+	下载地址：	
+	http://www.edge-security.com
+	http://code.google.com/p/metagoofil/
+
+4. 
