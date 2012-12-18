@@ -1,0 +1,32 @@
+Ubuntu 优化
+1. 主要清理升级缓存以及无用的包--包管理
+sudo apt-get autoclean
+sudo apt-get clean
+sudo spt-get autoremove
+2. 浏览器
+ls ~/.mozilla/firefox/.*default/Cache
+ls ~/.opera/cache4
+3. 其他：
+		清理Linux下孤立的包：
+			图形界面下我们可以用：gtkorphan
+			sudo apt-get install gtkorphan -y
+			终端命令下我们可以用：deborphan
+			sudo apt-get install deborphan -y
+		卸载：tracker
+			这个东西一般我只要安装Ubuntu就会第一删掉tracker 他不仅会产生大量的cache文件而且还会影响开机速度。所以在新得利里面删掉就行。
+		删除多余的内核：一定不要删错哦，切记！！
+			打开终端敲命令：dpkg --get-selections|grep linux
+			有image的就是内核文件
+			删除老的内核文件：
+			sudo apt-get remove 内核文件名 （例如：linux-image-2.6.27-2-generic）
+			最后不要忘了看看当前内核：uname -a
+			附录：
+
+				包管理的临时文件目录:
+				包在
+				/var/cache/apt/archives
+				没有下载完的在
+				/var/cache/apt/archives/partial
+4. tmp 每次机器重起会自动删除，如果man手册没用,还有/var/log里的日志都可以删除
+	du -h 文件夹  查看文件夹下文件所占用大小
+	
