@@ -4,7 +4,12 @@ ftp server
 
 sudo apt-get install pure-ftpd
 
-开启ftp服务器：sudo /usr/sbin/pure-ftpd &
+开启ftp服务器：sudo /usr/sbin/pure-ftpd &(使任务在后台运行)
+							exit--shell的时候出现登出 有停止的任务。警告。
+						然后，fg：将后台中的任务调至前台继续运行。但是Unable to start a standalone server: Address 
+						already in use。其中/etc/services记录了端口的使用。grep ftp /etc/services查找与ftp相关的服
+						务。fg后，貌似可以退出了，虽然有警告。
+
 使用ftp客户端登录：ftp ip address  使用服务器用户名即可登录
 									或者使用浏览器直接登录：ftp:// ip  address
 
