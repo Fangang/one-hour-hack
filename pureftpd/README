@@ -1,0 +1,11 @@
+pure-ftpd
+
+ftp server
+
+sudo apt-get install pure-ftpd
+
+开启ftp服务器：sudo /usr/sbin/pure-ftpd &
+使用ftp客户端登录：ftp ip address  使用服务器用户名即可登录
+									或者使用浏览器直接登录：ftp:// ip  address
+
+
