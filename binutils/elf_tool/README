@@ -1,0 +1,23 @@
+readelf用来显示一个或者多个elf格式的对象。参数控制显示的信息。与objdump相似，但是比objdump显示的更详细。
+并且它独立于BFD 库。
+可显示信息：
+	1. -h  elf文件头信息
+	2. -l 显示文件的段头segment
+	3. -S 显示文件的section头信息
+	4. -g section group信息
+	5. -s 显示符号表中的入口
+	6. -e 显示所有的头文件信息，相当于-h -l -S
+	7. -r 显示relocation sectiong内容
+	8. -u 显示uwind section
+	9. -d 显示文件的dynamic section
+	10. -A 显示文件中特定的架构信息
+
+objdump 
+	-d 显示反汇编代码：只是反汇编那些包含代码的段。
+	-e 与-g类似，调试标记
+	-a 显示archives的头信息
+	-C 解码符号名字 像C++ 编译器中的mangling会修改符号名字
+	-h 显示段的头文件信息
+	
+	
+	

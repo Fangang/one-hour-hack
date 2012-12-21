@@ -1,0 +1,21 @@
+addr2line
+
+
+       addr2line [-b bfdname│--target=bfdname]
+                 [-C│--demangle[=style]]
+                 [-e filename│--exe=filename]
+                 [-f│--functions] [-s│--basename]
+                 [-H│--help] [-V│--version]
+                 [addr addr ...]
+
+
+
+		给一个可执行程序和一个地址，将程序地址转化为对应于源代码的行数。使用-e选项指定可执行文件，默认为a.out.
+addr2line有两个操作模式。
+		1. 命令行中给定十六进制地址，然后，addr2line给出对应的文件名和对应与每一个地址的代码行数。
+		2. addr2line从标准输入中读取十六进制地址并打印出对应的文件名和行号于标准输出。这种模式下，addr2line可		用于一个管道之上，动态获取地址。
+		输出格式：FILENAME:LINENO
+
+示例：
+addr2line -e test 08048494
+测试之前可以使用readelf获取可执行文件信息。比如，地址信息。更方便的是使用objdump -d test 直接反汇编可执行文件。
